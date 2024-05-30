@@ -28,48 +28,59 @@ export const RegistrationForm = () => {
     },
   });
 
+  const onSubmit = async (data: z.infer<typeof schema>) => {
+    console.log(data);
+  };
+
   return (
     <Form {...form}>
-      <form className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="flex gap-2">
+          <FormField
+            control={form.control}
+            name="first"
+            render={({ field }) => (
+              <FormItem className="w-1/2">
+                <FormLabel>First Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="" {...field} />
+                </FormControl>
+                <FormDescription>Your First Name</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="last"
+            render={({ field }) => (
+              <FormItem className="w-1/2">
+                <FormLabel>Last Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="" {...field} />
+                </FormControl>
+                <FormDescription>Your Last Name</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
-              <FormControl><Input placeholder="" {...field}/></FormControl>
+              <FormControl>
+                <Input placeholder="" {...field} />
+              </FormControl>
               <FormDescription>Your email address </FormDescription>
-              <FormMessage/>
+              <FormMessage />
             </FormItem>
           )}
         />
-
-        <FormField
-          control={form.control}
-          name="first"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>First Name</FormLabel>
-              <FormControl><Input placeholder="" {...field}/></FormControl>
-              <FormDescription>Your First Name</FormDescription>
-              <FormMessage/>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="last"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Last Name</FormLabel>
-              <FormControl><Input placeholder="" {...field}/></FormControl>
-              <FormDescription>Your Last Name</FormDescription>
-              <FormMessage/>
-            </FormItem>
-          )}
-        />
-
         <Button type="submit">Submit</Button>
       </form>
     </Form>
