@@ -29,7 +29,15 @@ export const RegistrationForm = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof schema>) => {
-    console.log(data);
+    fetch("/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
   };
 
   return (
