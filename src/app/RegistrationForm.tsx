@@ -18,8 +18,16 @@ import { schema } from "./registrationSchema";
 
 type FormSchema = z.infer<typeof schema>;
 
-export const RegistrationForm = () => {
-  const form = useForm<FormSchema>({
+export const RegistrationForm = ({
+  onDataAction,
+}: {
+    onDataAction: (data: z.infer<typeof schema>) => Promise<{
+      message: string;
+      user?: z.infer<typeof schema>;
+      issues?: string[];
+    }>;
+  }) => {
+  const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
       first: "",
@@ -40,17 +48,18 @@ export const RegistrationForm = () => {
     //      .then((data) => console.log(data));
     //  };
 
-    const formData = new FormData();
-    formData.append("first", data.first);
-    formData.append("last", data.last);
-    formData.append("email", data.email);
-
-    fetch("/api/registerForm", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+//    const formData = new FormData();
+//    formData.append("first", data.first);
+//    formData.append("last", data.last);
+//    formData.append("email", data.email);
+//
+//    fetch("/api/registerForm", {
+//      method: "POST",
+//      body: formData,
+//    })
+//      .then((response) => response.json())
+//      .then((data) => console.log(data));
+    console.log(await onDataAction(data));
   };
 
   return (
